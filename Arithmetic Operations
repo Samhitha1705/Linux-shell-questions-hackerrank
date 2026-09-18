@@ -1,0 +1,5 @@
+#!/bin/bash
+
+read expression
+
+echo "scale=10; $expression" | bc -l | awk '{printf  "%.3f\n", $l}'
