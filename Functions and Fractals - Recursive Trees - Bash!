@@ -1,0 +1,53 @@
+#!/bin/bash
+
+read N
+
+for ((r=0; r<63; r++))
+do
+    tree[$r]=$(printf '%100s' '' | tr ' ' '_')
+done
+
+put() {
+    local r=$1
+    local c=$2
+
+    tree[$r]="${tree[$r]:0:$c}1${tree[$r]:$((c+1))}"
+}
+
+draw() {
+    local bottom=$1
+    local center=$2
+    local height=$3
+    local level=$4
+
+    if (( level == 0 ))
+    then
+        return
+    fi
+
+    for ((i=0; i<height; i++))
+    do
+        put $((bottom-i)) "$center"
+    done
+
+    for ((i=1; i<=height; i++))
+    do
+        local r=$((bottom-height-i+1))
+
+        put "$r" $((center-i))
+        put "$r" $((center+i))
+    done
+
+    local new_height=$((height/2))
+    local new_bottom=$((bottom-2*height))
+
+    draw "$new_bottom" $((center-height)) "$new_height" $((level-1))
+    draw "$new_bottom" $((center+height)) "$new_height" $((level-1))
+}
+
+draw 62 49 16 "$N"
+
+for ((r=0; r<63; r++))
+do
+    echo "${tree[$r]}"
+done
