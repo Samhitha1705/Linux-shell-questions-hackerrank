@@ -1,0 +1,4 @@
+while read country; do
+    countries+=("${country/[A-Z]/.}")
+done
+echo "${countries[*]}"
