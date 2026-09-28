@@ -1,0 +1,7 @@
+while IFS= read -r country || [[ -n "$country" ]]; do
+    countries+=("$country")
+done
+
+countries+=("${countries[@]}" "${countries[@]}")
+
+echo "${countries[*]}"
