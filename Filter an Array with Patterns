@@ -1,0 +1,9 @@
+while read country; do
+    countries+=("$country")
+done
+
+for country in "${countries[@]}"; do
+    [[ "$country" != *[aA]* ]] && result+=("$country")
+done
+
+echo "${result[*]}"
